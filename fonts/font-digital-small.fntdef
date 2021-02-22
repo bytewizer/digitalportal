@@ -1,0 +1,26 @@
+Verbosity 0
+AddFontToProcess .\truetype\digital-monoitalic.ttf
+SelectFont "FN:Digital-7 MonoItalic,WE:400,HE:25,IT:1,UN:0"
+AntiAlias 8
+SetDefaultCharacter
+ImportRange 97 122
+ImportRange 65 90
+ImportRange 48 57
+ImportRange 46 46
+ImportRange 44 44
+ImportRange 58 59
+ImportRange 32 34
+ImportRange 63 63
+ImportRange 39 39
+ImportRange 43 43
+ImportRange 123 125
+ImportRange 91 93
+ImportRange 40 43
+ImportRange 47 47
+ImportRange 60 62
+ImportRange 45 45
+ImportRange 64 64
+ImportRange 35 38
+ImportRange 94 95
+ImportRange 126 126
+Verbosity 1

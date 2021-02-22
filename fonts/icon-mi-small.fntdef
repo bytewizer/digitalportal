@@ -1,0 +1,20 @@
+Verbosity 0
+AddFontToProcess .\truetype\mi-regular.ttf
+SelectFont "FN:aterialIconsOutlined-Regula",WE:0,HE:23,IT:0"
+AntiAlias 2
+SetDefaultCharacter
+#ImportRange  57344 62011
+ImportRange  59381 59381
+ImportRange  59382 59382
+ImportRange  58942 58942
+ImportRange  58952 58952
+ImportRange  57746 57746
+ImportRange  58413 58413
+ImportRange  59576 59576
+ImportRange  58848 58848
+ImportRange  58849 58849
+ImportRange  61509 61509
+ImportRange  61500 61500
+ImportRange  57713 57713
+ImportRange  57384 57384
+Verbosity 1
