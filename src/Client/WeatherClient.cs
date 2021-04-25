@@ -1,17 +1,19 @@
-﻿using System.IO;
-using System.Diagnostics;
+﻿using System;
+using System.IO;
 using System.Net;
+using System.Diagnostics;
 
 using GHIElectronics.TinyCLR.Data.Json;
 
 using Bytewizer.TinyCLR.DigitalPortal.Client.Models;
+
 
 namespace Bytewizer.TinyCLR.DigitalPortal.Client
 {
     public class WeatherClient
     {
         public static WeatherResponse Connect(string lat, string lon, string units, string appId)
-        { 
+        {
             var url = $"http://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&units={units}&appid={appId}";
 
             try
@@ -27,7 +29,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal.Client
                         {
                             if (response.StatusCode == HttpStatusCode.OK)
                             {
-                                return  (WeatherResponse)JsonConverter.DeserializeObject(stream, typeof(WeatherResponse), CreateInstance);
+                                //return  (WeatherResponse)JsonConverter.DeserializeObject(stream, typeof(WeatherResponse), CreateInstance);
 
                                 //var reader = new StreamReader(stream);
                                 //while (reader.Peek() != -1)
@@ -36,40 +38,83 @@ namespace Bytewizer.TinyCLR.DigitalPortal.Client
                                 //    Debug.WriteLine(jsonResponse);
                                 //    return (WeatherResponse)JsonConverter.DeserializeObject(jsonResponse, typeof(WeatherResponse), CreateInstance);
                                 //}
+
+                                using (var reader = new StreamReader(stream))
+                                {
+                                    do
+                                    {
+                                        var jsonResponse = reader.ReadToEnd();
+                                        Debug.WriteLine(jsonResponse);
+                                        return (WeatherResponse)JsonConverter.DeserializeObject(jsonResponse, typeof(WeatherResponse), CreateInstance);
+
+                                    } while (!reader.EndOfStream);
+                                }
                             }
                         }
                     }
                 }
             }
-            catch 
+            catch
             {
-                
+
             }
 
             return null;
         }
 
-        private static object CreateInstance(string path, string name, int length)
+        private static object CreateInstance(string path, JToken root, Type baseType, string name, int length)
         {
-            if (path == "/" & name == "daily")
-                return new Daily[length];
+            if (path == "/current" & name == null)
+                return new Current();
 
-            if (path == "//daily" & name == null)
-                return new Daily();
+            //if (path == "/" & name == null)
+            //{
+            //    var tom = root.GetType();
+            //    var tom2 = root.GetBsonType();
+            //    var tom3 = root.GetBsonSize();
+            //    var tom4 = root.ToString();
+            //    return new Daily[100];
+            //}
 
-            if (path == "//daily" & name == "weather")
-                return new Weather[length];
 
-            if (path == "//daily/weather" & name == null)
-                return new Weather();
+            //if (path == "/" & name == "daily")
+            //    return new Daily[length];
 
-            if (path == "/current" & name == "weather")
-                return new Weather[length];
+            //if (path == "//daily" & name == null)
+            //    return new Daily();
 
-            if (path == "/current/weather" & name == null)
-                return new Weather();
+            //if (path == "//daily" & name == "weather")
+            //    return new Weather[length];
+
+            //if (path == "//daily/weather" & name == null)
+            //    return new Weather();
+
+            //if (path == "/current" & name == "weather")
+            //    return new Weather[length];
+
+            //if (path == "/current/weather" & name == null)
+            //    return new Weather();
 
             return null;
         }
     }
 }
+
+
+//if (path == "/" || name == "daily")
+//    return new Daily[length];
+
+//if (path == "//daily" || name == null)
+//    return new Daily();
+
+//if (path == "//daily" || name == "weather")
+//    return new Weather[length];
+
+//if (path == "//daily/weather" || name == null)
+//    return new Weather();
+
+//if (path == "/current" || name == "weather")
+//    return new Weather[length];
+
+//if (path == "/current/weather" || name == null)
+//    return new Weather();

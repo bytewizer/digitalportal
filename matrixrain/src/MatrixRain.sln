@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixRain", "MatrixRain.csproj", "{ABCCFBBD-070A-4773-8F4C-5759D9C40560}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABCCFBBD-070A-4773-8F4C-5759D9C40560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABCCFBBD-070A-4773-8F4C-5759D9C40560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABCCFBBD-070A-4773-8F4C-5759D9C40560}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{ABCCFBBD-070A-4773-8F4C-5759D9C40560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABCCFBBD-070A-4773-8F4C-5759D9C40560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABCCFBBD-070A-4773-8F4C-5759D9C40560}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {333BC5B2-5CD1-4BC6-AA87-C86A5126E2B9}
+	EndGlobalSection
+EndGlobal

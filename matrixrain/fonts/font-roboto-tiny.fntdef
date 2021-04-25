@@ -1,0 +1,7 @@
+Verbosity 0
+AddFontToProcess .\truetype\roboto-light.ttf
+SelectFont "FN:Roboto Light,WE:300,HE:16,IT:0,UN:0"
+AntiAlias 8
+SetAsDefaultCharacter 36
+ImportRange 32 287
+Verbosity 1
