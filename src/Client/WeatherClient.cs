@@ -29,7 +29,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal.Client
                         {
                             if (response.StatusCode == HttpStatusCode.OK)
                             {
-                                //return  (WeatherResponse)JsonConverter.DeserializeObject(stream, typeof(WeatherResponse), CreateInstance);
+                                return  (WeatherResponse)JsonConverter.DeserializeObject(stream, typeof(WeatherResponse), CreateInstance);
 
                                 //var reader = new StreamReader(stream);
                                 //while (reader.Peek() != -1)
@@ -39,16 +39,16 @@ namespace Bytewizer.TinyCLR.DigitalPortal.Client
                                 //    return (WeatherResponse)JsonConverter.DeserializeObject(jsonResponse, typeof(WeatherResponse), CreateInstance);
                                 //}
 
-                                using (var reader = new StreamReader(stream))
-                                {
-                                    do
-                                    {
-                                        var jsonResponse = reader.ReadToEnd();
-                                        Debug.WriteLine(jsonResponse);
-                                        return (WeatherResponse)JsonConverter.DeserializeObject(jsonResponse, typeof(WeatherResponse), CreateInstance);
+                                //using (var reader = new StreamReader(stream))
+                                //{
+                                //    do
+                                //    {
+                                //        var jsonResponse = reader.ReadToEnd();
+                                //        Debug.WriteLine(jsonResponse);
+                                //        return (WeatherResponse)JsonConverter.DeserializeObject(jsonResponse, typeof(WeatherResponse), CreateInstance);
 
-                                    } while (!reader.EndOfStream);
-                                }
+                                //    } while (!reader.EndOfStream);
+                                //}
                             }
                         }
                     }
@@ -67,33 +67,23 @@ namespace Bytewizer.TinyCLR.DigitalPortal.Client
             if (path == "/current" & name == null)
                 return new Current();
 
-            //if (path == "/" & name == null)
-            //{
-            //    var tom = root.GetType();
-            //    var tom2 = root.GetBsonType();
-            //    var tom3 = root.GetBsonSize();
-            //    var tom4 = root.ToString();
-            //    return new Daily[100];
-            //}
+            if (path == "/" & name == "daily")
+                return new Daily[length];
 
+            if (path == "//daily" & name == null)
+                return new Daily();
 
-            //if (path == "/" & name == "daily")
-            //    return new Daily[length];
+            if (path == "//daily" & name == "weather")
+                return new Weather[length];
 
-            //if (path == "//daily" & name == null)
-            //    return new Daily();
+            if (path == "//daily/weather" & name == null)
+                return new Weather();
 
-            //if (path == "//daily" & name == "weather")
-            //    return new Weather[length];
+            if (path == "/current" & name == "weather")
+                return new Weather[length];
 
-            //if (path == "//daily/weather" & name == null)
-            //    return new Weather();
-
-            //if (path == "/current" & name == "weather")
-            //    return new Weather[length];
-
-            //if (path == "/current/weather" & name == null)
-            //    return new Weather();
+            if (path == "/current/weather" & name == null)
+                return new Weather();
 
             return null;
         }

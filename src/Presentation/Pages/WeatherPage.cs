@@ -118,15 +118,16 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = WeatherProvider.Weather.Temp,
                 Font = ResourcesProvider.MediumDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted)
+                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Width = 80      
             };
 
             textHigh = new DigitalText
             {
                 Text = WeatherProvider.Weather.High,
                 Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                VerticalAlignment = VerticalAlignment.Center
-
+                VerticalAlignment = VerticalAlignment.Center,
+                Width = 40
             };
             textHigh.SetMargin(0, 0, 0, 2);
 
@@ -140,7 +141,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = WeatherProvider.Weather.Low,
                 Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                 Width = 40
             };
             textLow.SetMargin(0, 2, 0, 0);
 

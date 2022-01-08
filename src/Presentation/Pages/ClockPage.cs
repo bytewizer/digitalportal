@@ -82,7 +82,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = ResourcesProvider.UxNotificationOff,
                 Font = ResourcesProvider.SmallUxIcons,
-                Width = 20
+                Width = 25
             };
             textAlarmIcon.SetMargin(5);
 
@@ -118,14 +118,16 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = "00:00",
                 Font = ResourcesProvider.LargeDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted)
+                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Width = 300
             };
 
             textMeridiem = new DigitalText
             {
                 Text = "AM",
                 Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                HorizontalAlignment = HorizontalAlignment.Right
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Width = 25             
             };
 
             textSeparator = new DigitalText
@@ -139,7 +141,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = "00",
                 Font = ResourcesProvider.MediumDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted)
+                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Width = 80
             };
 
             var daysofweek = new string[] { "sun", "mon", "tue", "wed", "thr", "fri", "sat" };
@@ -150,7 +153,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 textDays[i] = new DigitalText
                 {
                     Text = daysofweek[i],
-                    Foreground = new SolidColorBrush(SettingsProvider.Theme.Shadow)
+                    Foreground = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                    Width = 35
+                    
                 };
                 textDays[i].SetMargin(12);
             }

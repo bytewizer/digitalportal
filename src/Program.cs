@@ -36,7 +36,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             
             //SettingsProvider.Flash.Ssid = "ssid";
             //SettingsProvider.Flash.Password = "password";
-            //SettingsProvider.Flash.NetworkEnabled = true;
+            //SettingsProvider.Flash.NetworkEnabled = false;
 
             BuzzerProvider.Initialize();
             DisplayProvider.Initialize();

@@ -120,53 +120,53 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 var response = WeatherClient.Connect(lat, lon, tempUnits, appId);
                 if (response != null)
                 {
-                    //var id = response.current.weather[0].id.ToString();
-                    //var icon = response.current.weather[0].icon.ToString();
+                    var id = response.current.weather[0].id.ToString();
+                    var icon = response.current.weather[0].icon.ToString();
 
-                    //string windDirection;
-                    //if (response.current.wind_speed > 0)
-                    //{
-                    //    windDirection = GetWindDirection(response.current.wind_deg);
-                    //}
-                    //else
-                    //{
-                    //    windDirection = string.Empty;
-                    //}
+                    string windDirection;
+                    if (response.current.wind_speed > 0)
+                    {
+                        windDirection = GetWindDirection(response.current.wind_deg);
+                    }
+                    else
+                    {
+                        windDirection = string.Empty;
+                    }
 
-                   
 
-                    //Weather = new WeatherData
-                    //{
-                    //    DateTime = ConvertToDate(response.current.dt),
-                    //    Temp = response.current.temp.ToString("N0"),
-                    //    TempUnit = tempIcon,
-                    //    Icon = iconProvider.GetIconUnicode(id, icon),
-                    //    High = response.daily[0].temp.max.ToString("N0"),
-                    //    Low = response.daily[0].temp.min.ToString("N0"),
-                    //    Main = response.current.weather[0].main.ToString(),
-                    //    Description = response.current.weather[0].description.ToString(),
-                    //    Wind = string.Format($"wind: { response.current.wind_speed.ToString("N0") } { windSpeed } {windDirection}"),
-                    //    Humidity = string.Format($"humidity: { response.current.humidity.ToString("N0") }%")
-                    //};
 
-                    //for (var i = 0; i < 5; i++)
-                    //{
-                    //    id = response.daily[i + 1].weather[0].id.ToString();
-                    //    icon = response.daily[i + 1].weather[0].icon.ToString();
+                    Weather = new WeatherData
+                    {
+                        DateTime = ConvertToDate(response.current.dt),
+                        Temp = response.current.temp.ToString("N0"),
+                        TempUnit = tempIcon,
+                        Icon = iconProvider.GetIconUnicode(id, icon),
+                        High = response.daily[0].temp.max.ToString("N0"),
+                        Low = response.daily[0].temp.min.ToString("N0"),
+                        Main = response.current.weather[0].main.ToString(),
+                        Description = response.current.weather[0].description.ToString(),
+                        Wind = string.Format($"wind: { response.current.wind_speed.ToString("N0") } { windSpeed } {windDirection}"),
+                        Humidity = string.Format($"humidity: { response.current.humidity.ToString("N0") }%")
+                    };
 
-                    //    Weather.Forcast[i] = new Forcast
-                    //    {
-                    //        Date = DateTime.Now.AddDays(i + 1).ToString("ddd dd"),
-                    //        High = response.daily[i + 1].temp.max.ToString("N0"),
-                    //        Low = response.daily[i + 1].temp.min.ToString("N0"),
-                    //        Icon = iconProvider.GetIconUnicode(id, icon)
-                    //    };
-                    //}
+                    for (var i = 0; i < 5; i++)
+                    {
+                        id = response.daily[i + 1].weather[0].id.ToString();
+                        icon = response.daily[i + 1].weather[0].icon.ToString();
 
-                    //var value = response.current.temp.ToString(); // This works
+                        Weather.Forcast[i] = new Forcast
+                        {
+                            Date = DateTime.Now.AddDays(i + 1).ToString("ddd dd"),
+                            High = response.daily[i + 1].temp.max.ToString("N0"),
+                            Low = response.daily[i + 1].temp.min.ToString("N0"),
+                            Icon = iconProvider.GetIconUnicode(id, icon)
+                        };
+                    }
+
+                    var value = response.current.temp.ToString(); // This works
                     //var value = response.current.temp; // This will not
-                    //var results = double.Parse(value).ToString();
-                    //Debug.WriteLine(results);
+                    var results = double.Parse(value).ToString();
+                   //Debug.WriteLine(results);
 
                     return Weather;
                 }

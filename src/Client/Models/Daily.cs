@@ -15,7 +15,7 @@
         public double dew_point { get; set; }
         public double wind_speed { get; set; }
         public int wind_deg { get; set; }
-        //public Weather[] weather { get; set; }
+        public Weather[] weather { get; set; }
         public int clouds { get; set; }
         public double rain { get; set; }
         public double uvi { get; set; }

@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Collections;
-using System;
+﻿using System.Collections;
 
 namespace Bytewizer.TinyCLR.DigitalPortal
 {

@@ -18,7 +18,7 @@
         public int visibility { get; set; }
         public double wind_speed { get; set; }
         public int wind_deg { get; set; }
-        //public Weather[] weather { get; set; }
+        public Weather[] weather { get; set; }
     }
 
 #pragma warning restore IDE1006 // Naming Styles
