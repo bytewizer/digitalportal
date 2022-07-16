@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-using Bytewizer.TinyCLR.DigitalPortal.Properties;
+using Bytewizer.TinyCLR.DigitialPortal.Assets.Properties;
 
 namespace Bytewizer.TinyCLR.DigitalPortal
 {

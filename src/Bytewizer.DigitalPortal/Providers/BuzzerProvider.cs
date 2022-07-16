@@ -28,9 +28,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 if (_initialized)
                     return;
 
-                Controller = PwmController.FromName(SC20260.Timer.Pwm.Controller3.Id);
+                Controller = PwmController.FromName(FEZPortal.Timer.Pwm.Controller3.Id);
 
-                _pwmChannel = Controller.OpenChannel(SC20260.Timer.Pwm.Controller3.PB1);
+                _pwmChannel = Controller.OpenChannel(FEZPortal.Timer.Pwm.Controller3.Buzzer);
                 _pwmChannel.SetActiveDutyCyclePercentage(0.5);
 
                 _playlist = new Queue();

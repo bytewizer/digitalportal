@@ -24,7 +24,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 if (_initialized)
                     return;
 
-                var i2cController = I2cController.FromName(SC20260.I2cBus.I2c1);
+                var i2cController = I2cController.FromName(FEZPortal.I2cBus.I2c1);
 
                 var I2cSettings = new I2cConnectionSettings(0x38)
                 {
@@ -35,7 +35,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 var i2cDevice = i2cController.GetDevice(I2cSettings);
 
                 var gpioController = GpioController.GetDefault();
-                var interrupt = gpioController.OpenPin(SC20260.GpioPin.PG9);
+                var interrupt = gpioController.OpenPin(FEZPortal.GpioPin.TouchInterrupt);
 
                 var orientation = FT5xx6Controller.TouchOrientation.Degrees0;
                 if (SettingsProvider.Flash.FlipOrientation == true)

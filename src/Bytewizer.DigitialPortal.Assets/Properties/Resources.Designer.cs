@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Bytewizer.TinyCLR.DigitalPortal.Properties
+namespace Bytewizer.TinyCLR.DigitialPortal.Assets.Properties
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal.Properties
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("Bytewizer.TinyCLR.DigitalPortal.Properties.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("Bytewizer.TinyCLR.DigitialPortal.Assets.Properties.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

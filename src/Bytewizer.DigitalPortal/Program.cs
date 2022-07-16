@@ -16,7 +16,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
     {
         public static Program MainProgram;
 
-        private static int timerTick = 0;
+        private static int timerTick = 1;
 
         public Program(DisplayController display)
             : base(display) { }
