@@ -4,7 +4,7 @@
 
 ## Requirements
 
-**Software:**  <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a> and <a href="https://www.ghielectronics.com/">GHI Electronics TinyCLR OS 2.0</a> or higher
+**Software:**  <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a> and <a href="https://www.ghielectronics.com/">GHI Electronics TinyCLR OS 2.2.0</a> or higher
 
 **Hardware:** <a href="https://www.digikey.com/short/4tv4vh ">GHI FEZ Portal Single Board Computer</a>
 
