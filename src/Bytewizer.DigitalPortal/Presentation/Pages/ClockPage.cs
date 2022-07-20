@@ -4,13 +4,13 @@ using GHIElectronics.TinyCLR.UI;
 using GHIElectronics.TinyCLR.UI.Media;
 using GHIElectronics.TinyCLR.UI.Controls;
 using GHIElectronics.TinyCLR.UI.Threading;
-using GHIElectronics.TinyCLR.Drivers.Microchip.Winc15x0;
-using System.Diagnostics;
 
 namespace Bytewizer.TinyCLR.DigitalPortal
 {
     class ClockPage : Page
     {
+        private readonly ClockService _clock;
+        
         private readonly DispatcherTimer clockTimer;
         private readonly DispatcherTimer statusTimer;
 
@@ -26,9 +26,11 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         private DigitalText textSeparator;
         private DigitalText[] textDays;
 
-        public ClockPage(int width, int height)
-            : base(width, height)
+        public ClockPage(DisplayService display, ClockService clock)
+            : base(display.Width, display.Height)
         {
+            _clock = clock;
+
             ShowMenu = true;
 
             clockTimer = new DispatcherTimer();
@@ -118,14 +120,14 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = "00:00",
                 Font = ResourcesProvider.LargeDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 Width = 300
             };
 
             textMeridiem = new DigitalText
             {
                 Text = "AM",
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 25             
             };
@@ -134,14 +136,14 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 Text = ":",
                 Font = ResourcesProvider.MediumDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted)
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted)
             };
 
             textSeconds = new DigitalText
             {
                 Text = "00",
                 Font = ResourcesProvider.MediumDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 Width = 80
             };
 
@@ -153,7 +155,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 textDays[i] = new DigitalText
                 {
                     Text = daysofweek[i],
-                    Foreground = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                    Foreground = new SolidColorBrush(SettingsService.Theme.Shadow),
                     Width = 35
                     
                 };
@@ -177,7 +179,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             PageBody.Children.Add(panelHeader);
             PageBody.Children.Add(panelTime);
             
-            if (SettingsProvider.Flash.ShowDow == true)
+            if (SettingsService.Flash.ShowDow == true)
             {
                 PageBody.Children.Add(panelDoW);
             }
@@ -191,12 +193,12 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (statusTick == 1)
             {
-                if (SettingsProvider.Flash.ShowDate == false)
+                if (SettingsService.Flash.ShowDate == false)
                 {
                     return;
                 }
 
-                var dateTime = ClockProvider.Controller.Now;
+                var dateTime = _clock.LocalTime;
                 UXExtensions.DoThreadSafeAction(textStatus, () =>
                 {
                     textStatus.Text = dateTime.ToString("MMM dd yyy");
@@ -206,16 +208,16 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 return;
             }
 
-            if (NetworkProvider.IsConnected)
+            if (SettingsService.NetworkConnected)
             {
-                if (SettingsProvider.Flash.ShowWeather == false)
+                if (SettingsService.Flash.ShowWeather == false)
                 {
                     return;
                 }
                 
                 if (statusTick == 7)
                 {
-                    var data = WeatherProvider.Weather;
+                    var data = SettingsService.Weather;
 
                     UXExtensions.DoThreadSafeAction(textStatus, () =>
                     {
@@ -228,7 +230,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
                 if (statusTick == 12)
                 {
-                    var data = WeatherProvider.Weather;
+                    var data = SettingsService.Weather;
 
                     UXExtensions.DoThreadSafeAction(textStatus, () =>
                     {
@@ -249,7 +251,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
-            var dateTime = ClockProvider.Controller.Now;
+            var dateTime = _clock.LocalTime;
 
             UXExtensions.DoThreadSafeAction(textTime, () =>
             {
@@ -292,7 +294,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 {
                     UXExtensions.DoThreadSafeAction(textDays[i], () =>
                     {
-                        textDays[i].Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted);
+                        textDays[i].Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted);
                         textDays[i].Invalidate();
                     });
                 }
@@ -300,13 +302,13 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                 {
                     UXExtensions.DoThreadSafeAction(textDays[i], () =>
                     {
-                        textDays[i].Foreground = new SolidColorBrush(SettingsProvider.Theme.Shadow);
+                        textDays[i].Foreground = new SolidColorBrush(SettingsService.Theme.Shadow);
                         textDays[i].Invalidate();
                     });
                 }
             }
 
-            if (NetworkProvider.IsConnected)
+            if (SettingsService.NetworkConnected)
             {
                 UXExtensions.DoThreadSafeAction(textWifi, () =>
                 {

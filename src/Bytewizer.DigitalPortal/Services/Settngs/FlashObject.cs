@@ -19,7 +19,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             Query = null;
             Units = Units.Imperial;
             TimeServer = "pool.ntp.org";
-            TimeOffset = -5;
+            TimeOffset = -18000;
             Location = "Ashburn, VA";
             FlipOrientation = true;
 

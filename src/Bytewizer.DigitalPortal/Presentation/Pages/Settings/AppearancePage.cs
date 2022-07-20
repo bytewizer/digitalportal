@@ -7,12 +7,18 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class AppearancePage : SettingPage
     {
+        private SettingsService _settings;
+        //private NetworkService _network;
+
         private ToggleSwitch toggleOrientation;
         private ToggleSwitch toggleShowDow;
 
-        public AppearancePage(int width, int height)
-            : base(width, height)
+        public AppearancePage(DisplayService display, SettingsService settings)
+            : base(display.Width, display.Height)
         {
+            //_network = network;
+            _settings = settings;
+
             BackText = ResourcesProvider.UxNavigateBefore;
             Title = "appearance settings";
 
@@ -32,7 +38,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Flip Orientation",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 480 - 40 - 60
@@ -40,9 +46,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             toggleOrientation = new ToggleSwitch()
             {
-                IsOn = SettingsProvider.Flash.FlipOrientation,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                IsOn = SettingsService.Flash.FlipOrientation,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 Width = 60,
                 Height = 40
             };
@@ -61,7 +67,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Show Days of the Week",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 480 - 40 - 60
@@ -69,9 +75,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             toggleShowDow = new ToggleSwitch()
             {
-                IsOn = SettingsProvider.Flash.FlipOrientation,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                IsOn = SettingsService.Flash.FlipOrientation,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 Width = 60,
                 Height = 40
             };
@@ -86,8 +92,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         public override void OnActivate() 
         {
-            toggleOrientation.IsOn = SettingsProvider.Flash.FlipOrientation;
-            toggleShowDow.IsOn = SettingsProvider.Flash.ShowDow;
+            toggleOrientation.IsOn = SettingsService.Flash.FlipOrientation;
+            toggleShowDow.IsOn = SettingsService.Flash.ShowDow;
         }
 
         private void AppearancePage_BackClick(object sender, RoutedEventArgs e)
@@ -102,14 +108,14 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (orientation == true)
             {
-                SettingsProvider.WriteOrientation(false);
+                _settings.WriteOrientation(false);
             }
             else
             {
-                SettingsProvider.WriteOrientation(true);
+                _settings.WriteOrientation(true);
             }
 
-            NetworkProvider.DisableWifi();
+            //_network.Stop();
             
             Power.Reset(); 
         }
@@ -120,11 +126,11 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (dow)
             {
-                SettingsProvider.WriteShowDow(false);
+                _settings.WriteShowDow(false);
             }
             else
             {
-                SettingsProvider.WriteShowDow(true);
+                _settings.WriteShowDow(true);
             }
 
             UXExtensions.DoThreadSafeAction(toggleShowDow, () =>

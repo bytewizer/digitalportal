@@ -20,10 +20,14 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         private int activePage;
 
-        public MainWindow(int width, int height)
+        private readonly BuzzerService _buzzer;
+
+        public MainWindow(DisplayService display, BuzzerService buzzer)
         {
-            Width = width;
-            Height = height;
+            _buzzer = buzzer;
+            
+            Width = display.Width;
+            Height = display.Height;
             WindowPages = new ArrayList();
 
             Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
@@ -215,6 +219,16 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             return panelMenu;
         }
 
+
+        private void PlayClick()
+        {
+            _buzzer.Play(
+                new MusicNote(Tone.G3, 35),
+                new MusicNote(Tone.G4, 35),
+                new MusicNote(Tone.G5, 35)
+                );
+        }
+
         private void MenuTimer_Tick(object sender, EventArgs e)
         {
             var panelMenu = (StackPanel)((DispatcherTimer)sender).Tag;
@@ -233,38 +247,36 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         private void PanelMenu_TouchUp(object sender, TouchEventArgs e)
         {
             menuTimer.Interval = new TimeSpan(0, 0, 5);
-
-            //BuzzerProvider.Play(
-            //    new MusicNote(Tone.G3, 35),
-            //    new MusicNote(Tone.G4, 35),
-            //    new MusicNote(Tone.G5, 35)
-            //    );
         }
 
         private void PanelAccessTime_TouchUp(object sender, TouchEventArgs e)
         {
+            PlayClick();
             Activate(0);
         }
 
         private void PanelCloud_TouchUp(object sender, TouchEventArgs e)
         {
-            if (NetworkProvider.IsConnected)
-            { 
-                Activate(1, true); 
+            PlayClick();
+            if (SettingsService.NetworkConnected)
+            {
+                Activate(1, true);
             }
             else
-            { 
+            {
                 Activate(4);
             }
         }
 
         private void PanelNotification_TouchUp(object sender, TouchEventArgs e)
         {
+            PlayClick();
             Activate(2);
         }
 
         private void PanelSettings_TouchUp(object sender, TouchEventArgs e)
         {
+            PlayClick();
             Activate(3);
         }
 
@@ -272,11 +284,11 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         {
             if (activePage == page)
             {
-                element.ForeColor = SettingsProvider.Theme.Highlighted;
+                element.ForeColor = SettingsService.Theme.Highlighted;
             }
             else
             {
-                element.ForeColor = SettingsProvider.Theme.Shadow;
+                element.ForeColor = SettingsService.Theme.Shadow;
             }
         }
     }

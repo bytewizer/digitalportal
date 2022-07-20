@@ -7,8 +7,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class OptionsPage : Page
     {
-        public OptionsPage(int width, int height)
-            : base(width, height)
+        public OptionsPage(DisplayService display)
+            : base(display.Width, display.Height)
         {
             ShowMenu = true;
 
@@ -37,7 +37,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = ResourcesProvider.UxNavigateNext,
                 Font = ResourcesProvider.SmallUxIcons,
-                ForeColor = SettingsProvider.Theme.Foreground,
+                ForeColor = SettingsService.Theme.Foreground,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Center,
                 Width = 50
@@ -65,7 +65,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = ResourcesProvider.UxNavigateNext,
                 Font = ResourcesProvider.SmallUxIcons,
-                ForeColor = SettingsProvider.Theme.Foreground,
+                ForeColor = SettingsService.Theme.Foreground,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Center,
                 Width = 50
@@ -93,7 +93,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = ResourcesProvider.UxNavigateNext,
                 Font = ResourcesProvider.SmallUxIcons,
-                ForeColor = SettingsProvider.Theme.Foreground,
+                ForeColor = SettingsService.Theme.Foreground,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Center,
                 Width = 50
@@ -121,7 +121,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = ResourcesProvider.UxNavigateNext,
                 Font = ResourcesProvider.SmallUxIcons,
-                ForeColor = SettingsProvider.Theme.Foreground,
+                ForeColor = SettingsService.Theme.Foreground,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Center,
                 Width = 50

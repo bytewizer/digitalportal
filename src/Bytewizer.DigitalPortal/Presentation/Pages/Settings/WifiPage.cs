@@ -7,13 +7,21 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class WifiPage : SettingPage
     {
+        private SettingsService _settings;
+
         private TextBox textNetwork;
         private TextBox textPassword;
         private ToggleSwitch textWiFi;
 
-        public WifiPage(int width, int height)
-            : base(width, height)
+        public WifiPage(
+            DisplayService display,
+            SettingsService settings)
+
+            : base(display.Width, display.Height)
         {
+            //_network = network;
+            _settings = settings;
+
             BackText = ResourcesProvider.UxNavigateBefore;
             Title = "Wireless";
 
@@ -24,7 +32,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         public override void CreateBody()
         {
-            SetPageColor(SettingsProvider.Theme.Standard);
+            SetPageColor(SettingsService.Theme.Standard);
 
             OnScreenKeyboard.Font = ResourcesProvider.SmallRobotoFont;
 
@@ -38,7 +46,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Wireless",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 480 - 40 - 60
@@ -46,9 +54,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textWiFi = new ToggleSwitch()
             {
-                IsOn = SettingsProvider.Flash.NetworkEnabled,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                IsOn = SettingsService.Flash.NetworkEnabled,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 Width = 60,
                 Height = 40
             };
@@ -67,7 +75,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Network",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 150
@@ -75,10 +83,10 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textNetwork = new TextBox()
             {
-                Text = SettingsProvider.Flash.Ssid,
+                Text = SettingsService.Flash.Ssid,
                 Font = ResourcesProvider.SmallRobotoFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Standard),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlign = TextAlignment.Center,
                 Width = 290
@@ -98,7 +106,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Password",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 150
@@ -106,10 +114,10 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textPassword = new TextBox()
             {
-                Text = SettingsProvider.Flash.Password,
+                Text = SettingsService.Flash.Password,
                 Font = ResourcesProvider.SmallRobotoFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Standard),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlign = TextAlignment.Center,
                 Width = 290
@@ -126,7 +134,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         public override void OnActivate() 
         {
-            if (NetworkProvider.IsConnected)
+            if (SettingsService.NetworkConnected)
             {
                 UXExtensions.DoThreadSafeAction(textNetwork, () =>
                 {
@@ -159,8 +167,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (networkEnabled == true)
             {
-                NetworkProvider.Controller.Disable();
-                SettingsProvider.WriteWifiEnabled(false);
+                //_network.Controller.Disable();
+                _settings.WriteWifiEnabled(false);
 
                 UXExtensions.DoThreadSafeAction(textWiFi, () =>
                 {
@@ -182,8 +190,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             }
             else
             {
-                SettingsProvider.WriteWifiEnabled(true);
-                NetworkProvider.EnableWifi();
+                _settings.WriteWifiEnabled(true);
+                //_network.Start();
 
                 UXExtensions.DoThreadSafeAction(textWiFi, () =>
                 {
@@ -213,7 +221,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (text.Length > 0)
             {
-                SettingsProvider.WriteSsid(text.Trim());
+                _settings.WriteSsid(text.Trim());
             }
         }
 
@@ -223,7 +231,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (text.Length > 0)
             {
-                SettingsProvider.WritePassword(text.Trim());
+                _settings.WritePassword(text.Trim());
             }
         }
     }

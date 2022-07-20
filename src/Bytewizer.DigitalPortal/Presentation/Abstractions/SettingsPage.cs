@@ -33,7 +33,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             CreateTitleBar();
             CreateBody();
 
-            SetPageColor(SettingsProvider.Theme.Highlighted);
+            SetPageColor(SettingsService.Theme.Highlighted);
 
             return PageBody;
         }

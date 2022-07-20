@@ -4,9 +4,9 @@ using Bytewizer.TinyCLR.DigitialPortal.Assets.Properties;
 
 namespace Bytewizer.TinyCLR.DigitalPortal
 {
-    public class ResourcesProvider
+    public class ResourceObject
     {
-        public static Font SmallDigitalFont = Resources.GetFont(Resources.FontResources.SmallDigitalFont);
+        public static Font SmallDigitalFont = Resources.GetFont(Resources.FontResources.SmallDigitalFont); 
         public static Font MediumDigitalFont = Resources.GetFont(Resources.FontResources.MediumDigitalFont);
         public static Font LargeDigitalFont = Resources.GetFont(Resources.FontResources.LargeDigitalFont);
         public static Font SmallRobotoFont = Resources.GetFont(Resources.FontResources.SmallRobotoFont);

@@ -8,14 +8,18 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class ThemePage : SettingPage
     {
+        private SettingsService _settings;
+
         private Border[] borders;
         private Rectangle[] rectangles;
 
         private Color colorSelected;
 
-        public ThemePage(int width, int height)
-            : base(width, height)
+        public ThemePage(DisplayService display, SettingsService settings)
+            : base(display.Width, display.Height)
         {
+            _settings = settings;
+
             BackText = ResourcesProvider.UxNavigateBefore;
             Title = "theme color";
 
@@ -26,7 +30,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         public override void CreateBody()
         {
-            colorSelected = SettingsProvider.Theme.Highlighted;
+            colorSelected = SettingsService.Theme.Highlighted;
 
             var panelPallet = new StackPanel(Orientation.Vertical)
             {
@@ -93,7 +97,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         public override void OnActivate()
         {
-            var fill = new SolidColorBrush(SettingsProvider.Theme.Highlighted);
+            var fill = new SolidColorBrush(SettingsService.Theme.Highlighted);
 
             for (var i = 0; i < rectangles.Length; i++)
             {
@@ -118,7 +122,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         private void ThemePage_BackClick(object sender, RoutedEventArgs e)
         {
-            SettingsProvider.WriteTheme(colorSelected);
+            _settings.WriteTheme(colorSelected);
 
             Parent.Refresh();
             Parent.Activate(3);

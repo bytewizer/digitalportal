@@ -8,8 +8,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         public DigitalText()
         {
             Font = ResourcesProvider.SmallDigitalFont;
-            Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard);
-            Background = new SolidColorBrush(SettingsProvider.Theme.Background);
+            Foreground = new SolidColorBrush(SettingsService.Theme.Standard);
+            Background = new SolidColorBrush(SettingsService.Theme.Background);
             IsEnabled = false;
         }
     }

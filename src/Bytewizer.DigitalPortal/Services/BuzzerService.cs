@@ -6,40 +6,27 @@ using GHIElectronics.TinyCLR.Devices.Pwm;
 
 namespace Bytewizer.TinyCLR.DigitalPortal
 {
-    public static class BuzzerProvider
+    public class BuzzerService
     {
-        private static readonly object _lock = new object();
+        private readonly object _lock = new object();
 
-        private static bool _initialized;
-
-        private static Thread _worker;
-        private static Queue _playlist;
-        private static PwmChannel _pwmChannel;
+        private Thread _worker;
+        private readonly Queue _playlist;
+        private readonly PwmChannel _pwmChannel;
 
         public static PwmController Controller { get; private set; }
 
-        public static void Initialize()
+        public BuzzerService()
         {
-            if (_initialized)
-                return;
-
-            lock (_lock)
-            {
-                if (_initialized)
-                    return;
 
                 Controller = PwmController.FromName(FEZPortal.Timer.Pwm.Controller3.Id);
 
                 _pwmChannel = Controller.OpenChannel(FEZPortal.Timer.Pwm.Controller3.Buzzer);
-                _pwmChannel.SetActiveDutyCyclePercentage(0.5);
-
+                
                 _playlist = new Queue();
-
-                _initialized = true;
-            }
         }
 
-        public static bool IsPlaying
+        public bool IsPlaying
         {
             get
             {
@@ -48,32 +35,32 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             }
         }
 
-        public static void Play(int frequency)
+        public void Play(int frequency)
         {
             Play(new Tone(frequency));
         }
 
-        public static void Play(Tone tone)
+        public void Play(Tone tone)
         {
             Play(new MusicNote(tone, Timeout.Infinite));
         }
 
-        public static void Play(int frequency, int duration)
+        public void Play(int frequency, int duration)
         {
             Play(new MusicNote(new Tone(frequency), duration));
         }
 
-        public static void Play(MusicNote note)
+        public void Play(MusicNote note)
         {
             Play(new Melody(note));
         }
 
-        public static void Play(params MusicNote[] notes)
+        public void Play(params MusicNote[] notes)
         {
             Play(new Melody(notes));
         }
 
-        public static void Play(Melody melody)
+        public void Play(Melody melody)
         {
             Stop();
 
@@ -84,7 +71,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             _worker.Start();
         }
 
-        public static void Stop()
+        public void Stop()
         {
             if (IsPlaying)
             {
@@ -98,7 +85,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             }
         }
 
-        private static void PlayNote()
+        private void PlayNote()
         {
             MusicNote note = null;
 

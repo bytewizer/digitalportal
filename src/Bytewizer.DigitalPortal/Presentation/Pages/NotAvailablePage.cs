@@ -5,8 +5,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class NotAvailablePage : Page
     {
-        public NotAvailablePage(int width, int height)
-            : base(width, height, Orientation.Horizontal)
+        public NotAvailablePage(DisplayService display)
+            : base(display.Width, display.Height, Orientation.Horizontal)
         {
             ShowMenu = true;
             InitializePage();

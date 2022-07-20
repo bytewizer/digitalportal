@@ -41,13 +41,28 @@
     <Compile Include="Client\GeoClient.cs" />
     <Compile Include="Client\Models\Units.cs" />
     <Compile Include="Controls\ToggleSwitch.cs" />
+    <Compile Include="Extensions\DiagnosticsLoggerExtensions.cs" />
+    <Compile Include="Services\BuzzerService.cs" />
+    <Compile Include="Services\ApplicationService.cs" />
+    <Compile Include="Services\ClockService.cs" />
+    <Compile Include="Services\DisplayWorker.cs" />
+    <Compile Include="Services\WirelessService.cs" />
+    <Compile Include="Services\Settngs\WeatherObject.cs" />
+    <Compile Include="Services\WeatherService.cs" />
+    <Compile Include="Services\WeatherWorker.cs" />
+    <Compile Include="Services\DisplayService.cs" />
+    <Compile Include="Services\WirelessWorker.cs" />
+    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Services\TouchService.cs" />
+    <Compile Include="Hosting\HostingAbstractionsHostExtensions.cs" />
+    <Compile Include="Hosting\LoggingServiceCollectionExtension.cs" />
+    <Compile Include="Hosting\ThreadPoolServiceCollectionExtension.cs" />
     <Compile Include="Presentation\Abstractions\SettingsPage.cs" />
     <Compile Include="Presentation\Pages\Settings\AppearancePage.cs" />
     <Compile Include="Presentation\Pages\Settings\OpenWeatherPage.cs" />
-    <Compile Include="Providers\BuzzerProvider.cs" />
-    <Compile Include="Providers\Buzzer\Melody.cs" />
-    <Compile Include="Providers\Buzzer\MusicNote.cs" />
-    <Compile Include="Providers\Buzzer\Tone.cs" />
+    <Compile Include="Services\Buzzer\Melody.cs" />
+    <Compile Include="Services\Buzzer\MusicNote.cs" />
+    <Compile Include="Services\Buzzer\Tone.cs" />
     <Compile Include="Client\Models\Current.cs" />
     <Compile Include="Client\Models\Daily.cs" />
     <Compile Include="Client\Models\FeelsLike.cs" />
@@ -60,14 +75,9 @@
     <Compile Include="Presentation\Pages\NotAvailablePage.cs" />
     <Compile Include="Presentation\Pages\Settings\ThemePage.cs" />
     <Compile Include="Presentation\Pages\Settings\WifiPage.cs" />
-    <Compile Include="Providers\DisplayProvider.cs" />
-    <Compile Include="Providers\ClockProvider.cs" />
-    <Compile Include="Providers\Settngs\FlashObject.cs" />
-    <Compile Include="Providers\ThemeColors.cs" />
-    <Compile Include="Providers\Settngs\ThemeObject.cs" />
-    <Compile Include="Providers\TouchProvider.cs" />
-    <Compile Include="Providers\NetworkProvider.cs" />
-    <Compile Include="Providers\SettingsProvider.cs" />
+    <Compile Include="Services\Settngs\FlashObject.cs" />
+    <Compile Include="Services\Settngs\ThemeColors.cs" />
+    <Compile Include="Services\Settngs\ThemeObject.cs" />
     <Compile Include="Presentation\Abstractions\IWindowsPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,8 +87,6 @@
     <Compile Include="Presentation\Pages\ClockPage.cs" />
     <Compile Include="Presentation\MainWindow.cs" />
     <Compile Include="Presentation\Pages\WeatherPage.cs" />
-    <Compile Include="Providers\WeatherIconProvider.cs" />
-    <Compile Include="Providers\WeatherProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -86,6 +94,36 @@
   <ItemGroup>
     <Reference Include="Bytewizer.TinyCLR.Core, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bytewizer.TinyCLR.Core.2.1.11\lib\net48\Bytewizer.TinyCLR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.DependencyInjection, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.DependencyInjection.2.1.11\lib\net48\Bytewizer.TinyCLR.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.DependencyInjection.Abstractions, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.DependencyInjection.Abstractions.2.1.11\lib\net48\Bytewizer.TinyCLR.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Hosting, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Hosting.2.1.11\lib\net48\Bytewizer.TinyCLR.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Logging, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Logging.2.1.11\lib\net48\Bytewizer.TinyCLR.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Logging.Abstractions, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Logging.Abstractions.2.1.11\lib\net48\Bytewizer.TinyCLR.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Logging.Debug, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Logging.Debug.2.1.11\lib\net48\Bytewizer.TinyCLR.Logging.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Logging.Extensions, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Logging.Extensions.2.1.11\lib\net48\Bytewizer.TinyCLR.Logging.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Pipeline, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Pipeline.2.1.11\lib\net48\Bytewizer.TinyCLR.Pipeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Sntp, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Sntp.2.1.8\lib\net48\Bytewizer.TinyCLR.Sntp.dll</HintPath>
+    </Reference>
+    <Reference Include="Bytewizer.TinyCLR.Sockets, Version=2.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytewizer.TinyCLR.Sockets.2.1.8\lib\net48\Bytewizer.TinyCLR.Sockets.dll</HintPath>
     </Reference>
     <Reference Include="GHIElectronics.TinyCLR.Data.Json, Version=2.2.0.4200, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GHIElectronics.TinyCLR.Data.Json.2.2.0.4200\lib\net452\GHIElectronics.TinyCLR.Data.Json.dll</HintPath>
@@ -154,6 +192,7 @@
       <Name>Bytewizer.TinyCLR.DigitialPortal.Assets</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

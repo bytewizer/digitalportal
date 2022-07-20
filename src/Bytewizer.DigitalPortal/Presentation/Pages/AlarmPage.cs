@@ -11,8 +11,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class AlarmPage : Page
     {
-        public AlarmPage(int width, int height)
-            : base(width, height, Orientation.Horizontal)
+        public AlarmPage(DisplayService display)
+            : base(display.Width, display.Height, Orientation.Horizontal)
         {
             ShowMenu = true;
             InitializePage();

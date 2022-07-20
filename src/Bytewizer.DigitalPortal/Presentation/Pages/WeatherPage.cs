@@ -10,6 +10,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     class WeatherPage : Page
     {
+        private readonly ClockService _clock;
+        private readonly WeatherService _weather;
+
         private readonly DispatcherTimer dateTimer;
         private readonly DispatcherTimer weatherTimer;
 
@@ -30,9 +33,12 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         private DigitalText[] textForcastHigh;
         private DigitalText[] textForcastLow;
 
-        public WeatherPage(int width, int height)
-            : base(width, height)
+        public WeatherPage(DisplayService display, ClockService clock, WeatherService weather)
+            : base(display.Width, display.Height)
         {
+            _clock = clock;
+            _weather = weather;
+
             ShowMenu = true;
 
             dateTimer = new DispatcherTimer();
@@ -90,42 +96,41 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textLocation = new DigitalText
             {
-                Text = SettingsProvider.Flash.Location
+                Text = SettingsService.Flash.Location
             };
             textLocation.SetMargin(5);
             textLocation.Width = 200 - 10;
+            panelHeader.Children.Add(textLocation);
 
             textDate = new DigitalText
             {
-                Text = DateTime.Now.ToString("ddd, MMM dd hh:mm tt"),
+                Text = _clock.LocalTime.ToString("ddd, MMM dd hh:mm tt"),
                 TextAlign = TextAlignment.Right
             };
             textDate.SetMargin(5);
             textDate.Width = 280 - 10;
-
-            panelHeader.Children.Add(textLocation);
             panelHeader.Children.Add(textDate);
 
             textIcon = new DigitalText
             {
-                Text = WeatherProvider.Weather.Icon,
+                Text = SettingsService.Weather.Icon,
                 Font = ResourcesProvider.MediumWeatherIcons,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted)
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted)
             };
             textIcon.SetMargin(0, 0, 2, 0);
 
             textTemp = new DigitalText
             {
-                Text = WeatherProvider.Weather.Temp,
+                Text = SettingsService.Weather.Temp,
                 Font = ResourcesProvider.MediumDigitalFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                Width = 80      
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
+                Width = 80
             };
 
             textHigh = new DigitalText
             {
-                Text = WeatherProvider.Weather.High,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Text = SettingsService.Weather.High,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 VerticalAlignment = VerticalAlignment.Center,
                 Width = 40
             };
@@ -134,24 +139,24 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             var lineHighLow = new Line(20, 0)
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Stroke = new Pen(SettingsProvider.Theme.Shadow)
+                Stroke = new Pen(SettingsService.Theme.Shadow)
             };
 
             textLow = new DigitalText
             {
-                Text = WeatherProvider.Weather.Low,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Text = SettingsService.Weather.Low,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 VerticalAlignment = VerticalAlignment.Center,
-                 Width = 40
+                Width = 40
             };
             textLow.SetMargin(0, 2, 0, 0);
 
             var textUnit = new DigitalText
             {
-                Text = WeatherProvider.Weather.TempUnit,
+                Text = SettingsService.Weather.TempUnit,
                 Font = ResourcesProvider.SmallWeatherIcons,
                 VerticalAlignment = VerticalAlignment.Top,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted)
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted)
             };
             textUnit.SetMargin(0, 4, 0, 0);
 
@@ -166,21 +171,21 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textWind = new DigitalText
             {
-                Text = WeatherProvider.Weather.Wind,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Text = SettingsService.Weather.Wind,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 TextAlign = TextAlignment.Left
             };
 
             textHumidity = new DigitalText
             {
-                Text = WeatherProvider.Weather.Humidity,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                Text = SettingsService.Weather.Humidity,
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                 TextAlign = TextAlignment.Left
             };
 
             textDescription = new DigitalText
             {
-                Text = WeatherProvider.Weather.Description
+                Text = SettingsService.Weather.Description
             };
             textDescription.Width = 480 - 40;
             textDescription.SetMargin(5);
@@ -194,13 +199,13 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             var line = new Line(460, 0)
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Stroke = new Pen(SettingsProvider.Theme.Shadow)
+                Stroke = new Pen(SettingsService.Theme.Shadow)
             };
 
-            var date = new string[5]; 
-            var icon = new string[5]; 
-            var high = new int[5]; 
-            var low = new int[5]; 
+            var date = new string[5];
+            var icon = new string[5];
+            var high = new int[5];
+            var low = new int[5];
             var forcastLine = new Line[5];
 
             var panelDay = new StackPanel[date.Length];
@@ -209,7 +214,6 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             textForcastIcon = new DigitalText[icon.Length];
             textForcastHigh = new DigitalText[low.Length];
             textForcastLow = new DigitalText[high.Length];
-
 
             var forcastWidth = (Width - 20) / 5;
 
@@ -220,11 +224,11 @@ namespace Bytewizer.TinyCLR.DigitalPortal
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
                 panelDay[i].Width = forcastWidth;
-                
+
                 textForcastDate[i] = new DigitalText()
                 {
-                    Text = WeatherProvider.Weather.Forcast[i].Date,
-                    Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                    Text = SettingsService.Weather.Forcast[i].Date,
+                    Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                     TextAlign = TextAlignment.Center
                 };
                 textForcastDate[i].SetMargin(2);
@@ -244,9 +248,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
                 textForcastIcon[i] = new DigitalText
                 {
-                    Text = WeatherProvider.Weather.Forcast[i].Icon,
+                    Text = SettingsService.Weather.Forcast[i].Icon,
                     Font = ResourcesProvider.SmallWeatherIcons,
-                    Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
+                    Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
                     TextAlign = TextAlignment.Right
                 };
                 panelIcon.Children.Add(textForcastIcon[i]);
@@ -260,7 +264,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
                 textForcastHigh[i] = new DigitalText
                 {
-                    Text = WeatherProvider.Weather.Forcast[i].High,
+                    Text = SettingsService.Weather.Forcast[i].High,
                     TextAlign = TextAlignment.Center
                 };
                 textForcastHigh[i].SetMargin(0, 0, 0, 2);
@@ -268,13 +272,13 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
                 forcastLine[i] = new Line(20, 0)
                 {
-                    Stroke = new Pen(SettingsProvider.Theme.Shadow)
+                    Stroke = new Pen(SettingsService.Theme.Shadow)
                 };
                 panelForcastHighLow.Children.Add(forcastLine[i]);
 
                 textForcastLow[i] = new DigitalText
                 {
-                    Text = WeatherProvider.Weather.Forcast[i].Low,
+                    Text = SettingsService.Weather.Forcast[i].Low,
                     TextAlign = TextAlignment.Center
                 };
                 textForcastLow[i].SetMargin(0, 2, 0, 0);
@@ -297,7 +301,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
-            var dateTime = ClockProvider.Controller.Now;
+            var dateTime = _clock.LocalTime;
             UXExtensions.DoThreadSafeAction(textDate, () =>
             {
                 textDate.Text = dateTime.ToString("ddd, MMM dd hh:mm tt");
@@ -306,7 +310,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             UXExtensions.DoThreadSafeAction(textLocation, () =>
             {
-                textLocation.Text = SettingsProvider.Flash.Location;
+                textLocation.Text = SettingsService.Flash.Location;
                 textLocation.Invalidate();
             });
         }
@@ -318,13 +322,13 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         private void GetWeather()
         {
-            if (WeatherProvider.Weather == null)
+            if (SettingsService.Weather == null)
             {
                 return;
             }
 
-            WeatherProvider.Connect();
-            var data = WeatherProvider.Weather;
+            _weather.Connect();
+            var data = SettingsService.Weather;
 
             UXExtensions.DoThreadSafeAction(textTemp, () =>
             {

@@ -9,6 +9,9 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 {
     public class OpenWeatherPage : SettingPage
     {
+        //private NetworkService _network;
+        private SettingsService _settings;
+
         private ToggleSwitch toggleUnits;
         private Text labelId;
         private TextBox textId;
@@ -21,9 +24,12 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         private Text labelLon;
         private TextBox textLon;
 
-        public OpenWeatherPage(int width, int height)
-            : base(width, height)
+        public OpenWeatherPage(DisplayService display,  SettingsService settings)
+            : base(display.Width, display.Height)
         {
+            //_network = network;
+            _settings = settings;
+            
             BackText = ResourcesProvider.UxNavigateBefore;
             Title = "Weather Settings";
             //NextText = ResourcesProvider.UxSave;
@@ -44,14 +50,14 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Temperature Unit",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 480 - 40 - 60
             };
 
             bool unitState;
-            switch (SettingsProvider.Flash.Units)
+            switch (SettingsService.Flash.Units)
             {
                 case Units.Imperial:
                     unitState = true;
@@ -65,8 +71,8 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             toggleUnits = new ToggleSwitch()
             {
                 IsOn = unitState,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Highlighted),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Highlighted),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 Width = 60,
                 Height = 40
             };
@@ -85,7 +91,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "App Id",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 140
@@ -93,10 +99,10 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textId = new TextBox()
             {
-                Text = SettingsProvider.Flash.OwmAppId,
+                Text = SettingsService.Flash.OwmAppId,
                 Font = ResourcesProvider.SmallRobotoFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Standard),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlign = TextAlignment.Center,
                 Width = 300
@@ -115,7 +121,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Location",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 100
@@ -123,10 +129,10 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textLocation = new TextBox()
             {
-                Text = SettingsProvider.Flash.Location,
+                Text = SettingsService.Flash.Location,
                 Font = ResourcesProvider.SmallRobotoFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Standard),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlign = TextAlignment.Center,
                 Width = 300
@@ -137,7 +143,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = ResourcesProvider.UxCached,
                 Font = ResourcesProvider.SmallUxIcons,
-                ForeColor = SettingsProvider.Theme.Foreground,
+                ForeColor = SettingsService.Theme.Foreground,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Center,
                 Width = 40
@@ -158,7 +164,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Latitude",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 140
@@ -166,10 +172,10 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textLat = new TextBox()
             {
-                Text = SettingsProvider.Flash.Lat,
+                Text = SettingsService.Flash.Lat,
                 Font = ResourcesProvider.SmallRobotoFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Standard),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlign = TextAlignment.Center,
                 Width = 300
@@ -189,7 +195,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             {
                 TextContent = "Longitude",
                 Font = ResourcesProvider.SmallDigitalFont,
-                ForeColor = SettingsProvider.Theme.Standard,
+                ForeColor = SettingsService.Theme.Standard,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlignment = TextAlignment.Left,
                 Width = 140
@@ -197,10 +203,10 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             textLon = new TextBox()
             {
-                Text = SettingsProvider.Flash.Lon,
+                Text = SettingsService.Flash.Lon,
                 Font = ResourcesProvider.SmallRobotoFont,
-                Foreground = new SolidColorBrush(SettingsProvider.Theme.Standard),
-                Background = new SolidColorBrush(SettingsProvider.Theme.Shadow),
+                Foreground = new SolidColorBrush(SettingsService.Theme.Standard),
+                Background = new SolidColorBrush(SettingsService.Theme.Shadow),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 TextAlign = TextAlignment.Center,
                 Width = 300
@@ -220,7 +226,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
         public override void OnActivate() 
         {
             bool unitState;
-            switch (SettingsProvider.Flash.Units)
+            switch (SettingsService.Flash.Units)
             {
                 case Units.Imperial:
                     unitState = true;
@@ -233,7 +239,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
             toggleUnits.IsOn = unitState;
 
 
-            if (NetworkProvider.IsConnected == false)
+            if (SettingsService.NetworkConnected == false)
             {
                 buttonRefresh.Visibility = Visibility.Hidden;
             }
@@ -245,33 +251,33 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
         private void WeatherSettingsPage_BackClick(object sender, RoutedEventArgs e)
         {
-            WeatherProvider.Connect();
+            //WeatherProvider.Connect();
             Parent.Refresh();
             Parent.Activate(3);
         }
 
         private void ButtonRefresh_TouchUp(object sender, TouchEventArgs e)
         {
-            if (NetworkProvider.IsConnected)
+            if (SettingsService.NetworkConnected)
             {
-                NetworkProvider.ConnectGeoLocation();
-                NetworkProvider.ConnectNetworkTime();
+                //_network.ConnectGeoLocation();
+                //_network.ConnectNetworkTime();
 
                 UXExtensions.DoThreadSafeAction(textLocation, () =>
                 {
-                    textLocation.Text = SettingsProvider.Flash.Location;
+                    textLocation.Text = SettingsService.Flash.Location;
                     textLocation.Invalidate();
                 });
 
                 UXExtensions.DoThreadSafeAction(textLat, () =>
                 {
-                    textLat.Text = SettingsProvider.Flash.Lat;
+                    textLat.Text = SettingsService.Flash.Lat;
                     textLat.Invalidate();
                 });
 
                 UXExtensions.DoThreadSafeAction(textLon, () =>
                 {
-                    textLon.Text = SettingsProvider.Flash.Lon;
+                    textLon.Text = SettingsService.Flash.Lon;
                     textLon.Invalidate();
                 });
             }
@@ -283,11 +289,11 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (unit)
             {
-                SettingsProvider.WriteUnits(Units.Metric);
+                _settings.WriteUnits(Units.Metric);
             }
             else
             {
-                SettingsProvider.WriteUnits(Units.Imperial);
+                _settings.WriteUnits(Units.Imperial);
             }
             
             UXExtensions.DoThreadSafeAction(toggleUnits, () =>
@@ -305,7 +311,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (text.Length > 0)
             {
-                SettingsProvider.WriteLocation(text);
+                _settings.WriteLocation(text);
             }
         }
 
@@ -315,7 +321,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (text.Length > 0)
             {
-                SettingsProvider.WriteLat(text);
+                _settings.WriteLat(text);
             }
         }
 
@@ -325,7 +331,7 @@ namespace Bytewizer.TinyCLR.DigitalPortal
 
             if (text.Length > 0)
             {
-                SettingsProvider.WriteLon(text);
+                _settings.WriteLon(text);
             }
         }
     }
